@@ -590,5 +590,65 @@
     "put the groceries on the table into the cupboard",
     "put away the groceries in the cupboard",
     "put the crackers box, the chocolate jello box, strawberry jello box, soup can, spam can, mustard bottle and sugar box in the cupboard"
+  ],
+  "toilet_seat_down+0": [
+    "toilet seat down",
+    "put the toilet seat down",
+    "grasping the top of the lid, close the toilet seat",
+    "put the toilet lid down",
+    "leave the toilet seat down",
+    "close the lid on the toilet",
+    "leave the toilet seat down",
+    "lower the toilet seat",
+    "grip the edge of the toilet lid and lower it flat on the toilet seat"
+  ],
+  "sweep_to_dustpan+0": [
+    "sweep dirt to dustpan",
+    "sweep the dirt up",
+    "use the broom to brush the dirt into the dustpan",
+    "clean up the dirt",
+    "pick up the brush and clean up the table",
+    "grasping the broom by its handle, clear way the dirt from the table",
+    "leave the table clean"
+  ],
+  "phone_on_base+0": [
+    "put the phone on the base",
+    "put the phone on the stand",
+    "put the hone on the hub",
+    "grasp the phone and put it on the base",
+    "place the phone on the base",
+    "put the phone back on the base"
+  ],
+  "take_umbrella_out_of_umbrella_stand+0": [
+    "take umbrella out of umbrella stand",
+    "grasping the umbrella by its handle, lift it up and out of the stand",
+    "remove the umbrella from the stand",
+    "retrieve the umbrella from the stand",
+    "get the umbrella",
+    "lift the umbrella out of the stand"
+  ],
+  "take_frame_off_hanger+0": [
+    "take frame off hanger",
+    "slide the photo off of the hanger and set it down on the table",
+    "grab a hold of the frame, remove it from the hanger and put it down",
+    "grasping the picture frame, take it off the wall and place iton the table top",
+    "take the picture down",
+    "remove the photo frame from the wall"
+  ],
+  "stack_wine+0": [
+    "stack wine bottle",
+    "slide the bottle onto the wine rack",
+    "put the wine away",
+    "leave the wine on the shelf",
+    "grasp the bottle and put it away",
+    "place the wine bottle on the wine rack"
+  ],
+  "water_plants+0": [
+    "water plant",
+    "pick up the watering can by its handle and water the plant",
+    "pour some water on the plant",
+    "the plant needs hydration",
+    "pour water from the watering can into the plant pot",
+    "water the soil"
   ]
 }
