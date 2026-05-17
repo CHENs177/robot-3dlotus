@@ -41,8 +41,12 @@ def get_prompts_from_label(text):
 
 
 class ClipEncoder(nn.Module):
-    def __init__(self, model_name='openai/clip-vit-base-patch32', device=None):
+    def __init__(self, model_name=None, device=None):
         super().__init__()
+        if model_name is None:
+            model_name = os.environ.get(
+                'CLIP_PRETRAINED_PATH', 'openai/clip-vit-base-patch32'
+            )
         os.environ['TOKENIZERS_PARALLELISM'] = 'false'
         self.model = CLIPModel.from_pretrained(model_name)
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)

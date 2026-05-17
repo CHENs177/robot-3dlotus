@@ -83,8 +83,14 @@ def get_config(
             config.merge_from_file(config_path)
             
     if opts:
-        config.CMD_TRAILING_OPTS = config.CMD_TRAILING_OPTS + opts
-        config.merge_from_list(config.CMD_TRAILING_OPTS)
+        opts = list(opts)
+        # Tap + known_only=True: e.g. `--record_video True` leaves a lone `True` in extra_args;
+        # yacs merge_from_list requires key/value pairs.
+        while len(opts) % 2 == 1 and str(opts[-1]).lower() in ('true', 'false'):
+            opts.pop()
+        if opts:
+            config.CMD_TRAILING_OPTS = config.CMD_TRAILING_OPTS + opts
+            config.merge_from_list(config.CMD_TRAILING_OPTS)
 
     config.CMD_TRAILING_OPTS = []
 

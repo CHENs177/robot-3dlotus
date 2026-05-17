@@ -53,7 +53,21 @@ class ServerArguments(tap.Tap):
     video_rotate_cam: bool = False
     video_resolution: int = 480
 
+    # Save RGB from policy cameras as PNG (no extra VisionSensor; avoids record_video GL crash)
+    save_frames_dir: str = None
+
     real_robot: bool = False
+
+
+def _save_episode_frames(save_frames_dir, taskvar, demo_id, step_id, obs_state_dict):
+    if not save_frames_dir or 'rgb' not in obs_state_dict:
+        return
+    from PIL import Image
+    base = os.path.join(save_frames_dir, taskvar, str(demo_id))
+    for cam_id, img in enumerate(obs_state_dict['rgb']):
+        cam_dir = os.path.join(base, f'cam{cam_id}')
+        os.makedirs(cam_dir, exist_ok=True)
+        Image.fromarray(img).save(os.path.join(cam_dir, f'{step_id:04d}.png'))
 
 
 def consumer_fn(args, batch_queue, result_queues):
@@ -170,6 +184,7 @@ def producer_fn(proc_id, k_res, args, taskvar, pred_file, batch_queue, result_qu
 
         obs_state_dict = env.get_observation(obs)  # type: ignore
         move.reset(obs_state_dict['gripper'])
+        _save_episode_frames(args.save_frames_dir, taskvar, demo_id, 0, obs_state_dict)
 
         for step_id in range(args.max_steps):
             # fetch the current observation, and predict one action
@@ -193,6 +208,9 @@ def producer_fn(proc_id, k_res, args, taskvar, pred_file, batch_queue, result_qu
             try:
                 obs, reward, terminate, _ = move(action, verbose=False)
                 obs_state_dict = env.get_observation(obs)  # type: ignore
+                _save_episode_frames(
+                    args.save_frames_dir, taskvar, demo_id, step_id + 1, obs_state_dict
+                )
 
                 if reward == 1:
                     success_rate += 1 / num_demos
@@ -229,7 +247,8 @@ def producer_fn(proc_id, k_res, args, taskvar, pred_file, batch_queue, result_qu
     
 def main():
     # To use gpu in subprocess: https://pytorch.org/docs/stable/notes/multiprocessing.html
-    mp.set_start_method('spawn')
+    # transformers/torch may set the context on import; force=True avoids RuntimeError.
+    mp.set_start_method('spawn', force=True)
 
     args = ServerArguments().parse_args(known_only=True)
     args.remained_args = args.extra_args
